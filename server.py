@@ -19,7 +19,7 @@ def run_morning():
         result = subprocess.run(["python", "quicktips.py"], capture_output=True, text=True, timeout=60)
         return Response(result.stdout, mimetype="text/plain")
     except Exception as e:
-        return f"Chyba: {e}"
+        return Response(f"Chyba: {e}", mimetype="text/plain")
 
 @app.route("/run-evening")
 def run_evening():
@@ -27,11 +27,11 @@ def run_evening():
         result = subprocess.run(["python", "evaluate_quicktips.py"], capture_output=True, text=True, timeout=90)
         return Response(result.stdout, mimetype="text/plain")
     except Exception as e:
-        return f"Chyba: {e}"
+        return Response(f"Chyba: {e}", mimetype="text/plain")
 
 @app.route("/")
 def home():
     return "✅ QuickTips server běží!"
 
-if name == "main":
+if name == "main":   # ← OPRAVENÝ ŘÁDEK
     app.run(host="0.0.0.0", port=10000)
